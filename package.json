@@ -1,0 +1,27 @@
+{
+  "name": "01lab.github.io",
+  "version": "0.0.1",
+  "description": "Site do grupo 01Lab",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/01Lab/01lab.github.io.git"
+  },
+  "keywords": [
+    "site",
+    "01",
+    "lab",
+    "01lab",
+    "criptografia",
+    "si"
+  ],
+  "author": "Igor Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/01Lab/01lab.github.io/issues"
+  },
+  "homepage": "https://github.com/01Lab/01lab.github.io#readme"
+}
