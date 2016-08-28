@@ -16,7 +16,7 @@ body {
 nav {
   display: flex;
   justify-content: center;
-  padding: 7em;
+  padding: 6em;
 }
 
 nav ul {
