@@ -7,7 +7,7 @@ const imagemin = require('gulp-imagemin');
 // TASKS
 
 // AUTOPREFIXER
-gulp.task('default', () =>
+gulp.task('autoprefixer', () =>
     gulp.src('assets/css/style.css')
         .pipe(autoprefixer({
             browsers: ['last 2 versions'],
