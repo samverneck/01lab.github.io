@@ -1,21 +1,125 @@
-<!DOCTYPE html>
+<!doctype html>
+
+
 <html>
-  <head>
-    <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
-    <link rel="stylesheet" href="assets/css/style.css" charset="utf-8">
-    <title>01LAB</title>
-  </head>
-  <body>
-    <nav class="barra">
-      <ul>
-        <li><a class="itens" href="#">Sobre</a></li>
-        <li><a class="itens" href="#">Projetos</a></li>
-        <li><a class="itens" href="#">Contato</a></li>
-      </ul>
-    </nav>
-    <div class="github">
-      <a href="https://github.com/01lab" target="_blank"><img src="assets/img/github.svg" alt="Github" /></a>
-    </div>
-  </body>
+<head>
+        <meta charset="utf-8">
+        <title>01 LAB - RESEARCHES OF SECURITY</title>
+        
+<style>
+  #terminal{
+  margin:20px;
+  background-color:rgba(0,0,0,0.9);
+  color:#00ff1e;
+  font-family: Inconsolata,monospace;
+  height:400px;
+  width:500px;
+  position:absolute;
+  padding:10px;
+  border-radius:5px;
+  box-shadow:0 0 10px black;
+  line-height:15px;
+  word-wrap:break-word;
+  text-shadow: 0 0 5px #00ff1e;
+  overflow:hidden;
+  -webkit-animation-fill-mode: forwards;  
+}
+
+@-webkit-keyframes off{
+  10%{
+    background-color: rgba(255,255,255,0.9);
+  }
+    
+  20%{
+    width: 500px;
+    height:1px;
+    top: 198px;
+    left:0;
+  }
+  50%{
+    width:10px;
+    height:10px; 
+    top: 198px;
+    left: 245px;
+    box-shadow:0 0 10px white;
+    background-color:white;
+  }
+    
+  98%{
+      width:10px;
+    height:10px; 
+
+  }
+  100%{
+    top: 198px;
+    width:0;
+    height:0; 
+    left: 245px;
+  }
+}
+</style>
+</head>
+
+<body>
+   
+    <div id="terminal"></div>
+    
+<script>
+    
+// /starts a new line |delays
+var string = ">01 LAB INITIALISING.|..|...|....|...../>STARTUP OK./>Welcome, user./>Please adjust.|";
+ 
+var fString = "";
+var progress = 0; 
+var badString= "";
+var blinker = false; 
+ 
+var goMad = function(){ 
+  badString="";
+  var count = 0;
+  while(badString.length<1350){
+      badString+= Math.floor(Math.random()*10);
+    count++;
+  }   
+  $('#terminal').text(badString);
+  setTimeout(function(){
+    $('body').css('background-color','black');
+    $('#terminal').text("");
+    $('#terminal').css('padding','0').css('-webkit-animation','off 1s forwards');
+  },2000);  
+} 
+   
+
+   blink = function(){
+   blinker?$('#terminal').html(fString):$('#terminal').html(fString+"_")
+   blinker=!blinker;
+}; 
+
+var pause = function(){
+  var setBlink = setInterval(function(){blink();}, 500);
+  setTimeout(function(){type(); clearInterval(setBlink);}, 1000);
+};
+
+var type = function(){
+  if(progress<string.length){
+  var next = string.substring(progress,progress+1);
+  switch(next){
+    case "|": pause(); break;
+    case "/": fString+="<p>"; setTimeout(function(){type()},100);  break;
+    default: fString+=next;
+      $('#terminal').html(fString+"_"); 
+      setTimeout(function(){type()}, 50 + Math.random()*100); 
+      break;
+    }
+  progress++;
+  }
+  //else{setInterval(function(){blink();}, 500);}
+  else{setInterval(function(){goMad();},50);}
+};  
+
+
+
+type();  
+</script>
+</body>
 </html>
