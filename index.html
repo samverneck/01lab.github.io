@@ -1,107 +1,77 @@
-<div id="terminal"></div>
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    
 <style>
-#terminal{
-  margin:20px;
-  background-color:rgba(0,0,0,0.9);
-  color:#00ff1e;
-  font-family: Inconsolata,monospace;
-  height:400px;
-  width:500px;
-  position:absolute;
-  padding:10px;
-  border-radius:5px;
-  box-shadow:0 0 10px black;
-  line-height:15px;
-  word-wrap:break-word;
-  text-shadow: 0 0 5px #00ff1e;
-  overflow:hidden;
-  -webkit-animation-fill-mode: forwards;  
+body {
+  background-color: black;
+  color: #55ff55;
+  font-family: monospace;
+  font-size:26px;
 }
-
-@-webkit-keyframes off{
-  10%{
-    background-color: rgba(255,255,255,0.9);
-  }
-  20%{
-    width: 500px;
-    height:1px;
-    top: 198px;
-    left:0;
-  }
-  50%{
-    width:10px;
-    height:10px; 
-    top: 198px;
-    left: 245px;
-    box-shadow:0 0 10px white;
-    background-color:white;
-  }
-  98%{
-      width:10px;
-    height:10px; 
-
-  }
-  100%{
-    top: 198px;
-    width:0;
-    height:0; 
-    left: 245px;
-  }
+.output {
+display:none;
 }
+.active:after {
+  content: '_';
+}    
 </style>
+</head>
+
+<body>
+<main class="prompt">
+  <p>Hello Neo Welcome 01LAB</p>
+  <p>RESEARCHES OF SECURITY</p>
+</main>
 <script>
-    // /starts a new line |delays
-var string = ">01 LAB INITIALISING.|..|...|....|...../>STARTUP OK./>Welcome, user./>Please adjust.|";
- 
-var fString = "";
-var progress = 0; 
-var badString= "";
-var blinker = false; 
- 
-var goMad = function(){ 
-  badString="";
-  var count = 0;
-  while(badString.length<1350){
-      badString+= Math.floor(Math.random()*10);
-    count++;
-  }   
-  $('#terminal').text(badString);
-  setTimeout(function(){
-    $('body').css('background-color','black');
-    $('#terminal').text("");
-    $('#terminal').css('padding','0').css('-webkit-animation','off 1s forwards');
-  },2000);  
-} 
-   
+var $lines = $('.prompt p');
+$lines.hide();
+var lineContents = new Array();
 
- blink = function(){
-   blinker?$('#terminal').html(fString):$('#terminal').html(fString+"_")
-   blinker=!blinker;
-}; 
+var terminal = function() {
 
-var pause = function(){
-  var setBlink = setInterval(function(){blink();}, 500);
-  setTimeout(function(){type(); clearInterval(setBlink);}, 1000);
-};
-
-var type = function(){
-  if(progress<string.length){
-  var next = string.substring(progress,progress+1);
-  switch(next){
-    case "|": pause(); break;
-    case "/": fString+="<p>"; setTimeout(function(){type()},100);  break;
-    default: fString+=next;
-      $('#terminal').html(fString+"_"); 
-      setTimeout(function(){type()}, 50 + Math.random()*100); 
-      break;
+  var skip = 0;
+  typeLine = function(idx) {
+    idx == null && (idx = 0);
+    var element = $lines.eq(idx);
+    var content = lineContents[idx];
+    if(typeof content == "undefined") {
+      $('.skip').hide();
+      return;
     }
-  progress++;
+    var charIdx = 0;
+
+    var typeChar = function() {
+      var rand = Math.round(Math.random() * 150) + 25;
+
+      setTimeout(function() {
+        var char = content[charIdx++];
+        element.append(char);
+        if(typeof char !== "undefined")
+          typeChar();
+        else {
+          element.append('<br/><span class="output">' + element.text().slice(9, -1) + '</span>');
+          element.removeClass('active');
+          typeLine(++idx);
+        }
+      }, skip ? 0 : rand);
+    }
+    content = '' + content + '';
+    element.append(' ').addClass('active');
+    typeChar();
   }
-  //else{setInterval(function(){blink();}, 500);}
-  else{setInterval(function(){goMad();},50);}
-};  
 
+  $lines.each(function(i) {
+    lineContents[i] = $(this).text();
+    $(this).text('').show();
+  });
 
+  typeLine();
+}
 
-type();  
+terminal();    
 </script>
+</body>
+</html>
